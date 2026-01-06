@@ -5,18 +5,44 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portfolio – Angeli Herimpitia</title>
 
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
   <style>
+    :root {
+      --primary-color: #4b73ff;
+      --secondary-color: #7b5bff;
+      --bg-color: #0f0f14;
+      --section-bg: #181820;
+      --text-color: #e9e9e9;
+      --border-radius: 14px;
+    }
+
+    [data-theme="light"] {
+      --bg-color: #f5f5f5;
+      --section-bg: #ffffff;
+      --text-color: #111111;
+      --primary-color: #4b73ff;
+      --secondary-color: #7b5bff;
+    }
+
+    * {
+      box-sizing: border-box;
+      transition: background 0.3s, color 0.3s;
+    }
+
     body {
       margin: 0;
-      font-family: "Poppins", sans-serif;
-      background: #0f0f14;
-      color: #e9e9e9;
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
     }
 
     header {
       text-align: center;
       padding: 70px 20px;
-      background: linear-gradient(135deg, #4b73ff, #6b3bff);
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
       border-bottom-left-radius: 40px;
       border-bottom-right-radius: 40px;
       box-shadow: 0 6px 20px rgba(0,0,0,0.45);
@@ -26,13 +52,25 @@
       width: 130px;
       height: 130px;
       border-radius: 50%;
-      border: 4px solid white;
+      border: 4px solid #fff;
       object-fit: cover;
+      transition: transform 0.3s;
+    }
+
+    header img:hover {
+      transform: scale(1.05);
     }
 
     h1 {
       margin-top: 15px;
       font-size: 32px;
+      font-weight: 600;
+    }
+
+    header p {
+      margin: 5px 0 0;
+      font-weight: 300;
+      color: var(--text-color);
     }
 
     section {
@@ -40,16 +78,17 @@
       max-width: 900px;
       margin: 30px auto;
       padding: 25px;
-      background: #181820;
-      border-radius: 14px;
+      background: var(--section-bg);
+      border-radius: var(--border-radius);
       box-shadow: 0 4px 15px rgba(0,0,0,0.35);
       animation: fadeIn 0.7s ease;
     }
 
     h2 {
-      color: #7b5bff;
-      border-left: 4px solid #7b5bff;
+      color: var(--secondary-color);
+      border-left: 4px solid var(--secondary-color);
       padding-left: 10px;
+      margin-bottom: 15px;
     }
 
     ul {
@@ -63,23 +102,118 @@
 
     .project-btn {
       display: inline-block;
-      padding: 12px 18px;
-      background: #4b73ff;
+      padding: 12px 20px;
+      background: var(--primary-color);
       color: white;
-      font-weight: bold;
+      font-weight: 600;
       border-radius: 8px;
       text-decoration: none;
       margin: 10px 10px 0 0;
-      transition: 0.3s;
+      transition: all 0.3s ease;
     }
 
     .project-btn:hover {
-      background: #365be0;
+      background: var(--secondary-color);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    /* Projets GitHub en cartes */
+    .projects-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .project-card {
+      background: var(--section-bg);
+      border-radius: var(--border-radius);
+      padding: 15px;
+      flex: 1 1 calc(50% - 15px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+
+    .project-card h3 {
+      margin-top: 0;
+      color: var(--primary-color);
+    }
+
+    .project-card p {
+      font-size: 0.9rem;
+      color: var(--text-color);
+    }
+
+    .project-card a {
+      display: inline-block;
+      margin-top: 10px;
+      text-decoration: none;
+      color: white;
+      background: var(--primary-color);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    .project-card a:hover {
+      background: var(--secondary-color);
     }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Mode toggle button */
+    #theme-toggle {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      padding: 12px 16px;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 600;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      z-index: 1000;
+    }
+
+    #theme-toggle:hover {
+      background: var(--secondary-color);
+      transform: translateY(-2px);
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      header {
+        padding: 50px 15px;
+      }
+
+      h1 {
+        font-size: 26px;
+      }
+
+      .project-btn {
+        padding: 10px 16px;
+        margin: 8px 5px 0 0;
+      }
+
+      #theme-toggle {
+        bottom: 20px;
+        right: 20px;
+      }
+
+      .project-card {
+        flex: 1 1 100%;
+      }
     }
   </style>
 </head>
@@ -87,7 +221,7 @@
 <body>
 
   <header>
-    <img src="photo3.jpg" alt="Photo de profil">
+    <img src="photo3.jpg" alt="Photo de profil d'Angeli Herimpitia">
     <h1>Angeli Herimpitia</h1>
     <p>Développeur Junior • Passionné d'informatique</p>
   </header>
@@ -122,14 +256,7 @@
 
   <section>
     <h2>Mes Projets GitHub</h2>
-
-    <a class="project-btn" href="https://github.com/AngeliHerimpitia/Mon-site" target="_blank">
-      Portfolio
-    </a>
-
-    <a class="project-btn" href="https://github.com/AngeliHerimpitia" target="_blank">
-      Voir tous mes projets
-    </a>
+    <div class="projects-container" id="projects"></div>
   </section>
 
   <section>
@@ -140,6 +267,54 @@
       <li>Anglais : Basique</li>
     </ul>
   </section>
+
+  <!-- Bouton Mode Sombre / Clair -->
+  <button id="theme-toggle">🌙 Mode Sombre</button>
+
+  <script>
+    // Mode sombre/clair
+    const toggleButton = document.getElementById('theme-toggle');
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    toggleButton.textContent = currentTheme === 'dark' ? '🌙 Mode Sombre' : '☀️ Mode Clair';
+
+    toggleButton.addEventListener('click', () => {
+      let theme = document.documentElement.getAttribute('data-theme');
+      if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'light');
+        toggleButton.textContent = '☀️ Mode Clair';
+        localStorage.setItem('theme', 'light');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        toggleButton.textContent = '🌙 Mode Sombre';
+        localStorage.setItem('theme', 'dark');
+      }
+    });
+
+    // Récupérer les projets GitHub
+    const username = 'AngeliHerimpitia';
+    const projectsContainer = document.getElementById('projects');
+
+    fetch(`https://api.github.com/users/${username}/repos?sort=updated`)
+      .then(response => response.json())
+      .then(repos => {
+        repos.forEach(repo => {
+          const card = document.createElement('div');
+          card.className = 'project-card';
+          card.innerHTML = `
+            <h3>${repo.name}</h3>
+            <p>${repo.description || 'Pas de description disponible.'}</p>
+            <a href="${repo.html_url}" target="_blank">Voir sur GitHub</a>
+          `;
+          projectsContainer.appendChild(card);
+        });
+      })
+      .catch(err => {
+        projectsContainer.innerHTML = '<p>Impossible de charger les projets GitHub.</p>';
+        console.error(err);
+      });
+  </script>
 
 </body>
 </html>
