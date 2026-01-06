@@ -162,11 +162,16 @@
       margin-top: 5px;
     }
 
+    .project-card .buttons {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+    }
+
     .project-card a {
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      margin-top: 10px;
       text-decoration: none;
       color: white;
       background: var(--primary-color);
@@ -194,7 +199,7 @@
     /* Couleurs langage */
     .lang-JavaScript { background: #f7df1e; color: #111; }
     .lang-C { background: #00599C; }
-    .lang-C++ { background: #00599C; }
+    .lang-Cp { background: #00599C; } /* C++ */
     .lang-Python { background: #3572A5; }
     .lang-HTML { background: #e34c26; }
     .lang-CSS { background: #264de4; }
@@ -328,7 +333,6 @@
       .then(response => response.json())
       .then(repos => {
         repos.forEach(repo => {
-          // Choisir couleur selon langage
           const lang = repo.language || 'Other';
           const langClass = 'lang-' + lang.replace(/\+/g,'p').replace(/\s/g,'') || 'lang-Other';
 
@@ -338,7 +342,10 @@
             <h3><i class="fab fa-github"></i> ${repo.name}</h3>
             <p>${repo.description || 'Pas de description disponible.'}</p>
             <span class="lang-badge ${langClass}">${lang}</span>
-            <a href="${repo.html_url}" target="_blank"><i class="fab fa-github"></i> Voir sur GitHub</a>
+            <div class="buttons">
+              <a href="${repo.html_url}" target="_blank"><i class="fab fa-github"></i> Code</a>
+              ${repo.homepage ? `<a href="${repo.homepage}" target="_blank">Voir</a>` : ''}
+            </div>
           `;
           projectsContainer.appendChild(card);
         });
