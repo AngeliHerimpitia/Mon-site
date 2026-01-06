@@ -8,6 +8,9 @@
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
+  <!-- Icône GitHub -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
   <style>
     :root {
       --primary-color: #4b73ff;
@@ -75,7 +78,7 @@
 
     section {
       width: 90%;
-      max-width: 900px;
+      max-width: 1000px;
       margin: 30px auto;
       padding: 25px;
       background: var(--section-bg);
@@ -100,6 +103,7 @@
       padding: 6px 0;
     }
 
+    /* Boutons généraux */
     .project-btn {
       display: inline-block;
       padding: 12px 20px;
@@ -118,39 +122,50 @@
       box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     }
 
-    /* Projets GitHub en cartes */
+    /* Projets GitHub cartes */
     .projects-container {
       display: flex;
       flex-wrap: wrap;
-      gap: 15px;
+      gap: 20px;
     }
 
     .project-card {
       background: var(--section-bg);
       border-radius: var(--border-radius);
-      padding: 15px;
-      flex: 1 1 calc(50% - 15px);
+      padding: 20px;
+      flex: 1 1 calc(50% - 20px);
       box-shadow: 0 4px 15px rgba(0,0,0,0.3);
       transition: transform 0.3s, box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
     .project-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      transform: translateY(-6px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.45);
     }
 
     .project-card h3 {
       margin-top: 0;
       color: var(--primary-color);
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .project-card p {
       font-size: 0.9rem;
       color: var(--text-color);
+      flex-grow: 1;
+      margin-top: 5px;
     }
 
     .project-card a {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
       margin-top: 10px;
       text-decoration: none;
       color: white;
@@ -164,6 +179,26 @@
     .project-card a:hover {
       background: var(--secondary-color);
     }
+
+    /* Langage tag */
+    .lang-badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: white;
+      margin-top: 8px;
+    }
+
+    /* Couleurs langage */
+    .lang-JavaScript { background: #f7df1e; color: #111; }
+    .lang-C { background: #00599C; }
+    .lang-C++ { background: #00599C; }
+    .lang-Python { background: #3572A5; }
+    .lang-HTML { background: #e34c26; }
+    .lang-CSS { background: #264de4; }
+    .lang-Other { background: #6c757d; }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
@@ -191,7 +226,6 @@
       transform: translateY(-2px);
     }
 
-    /* Responsive */
     @media (max-width: 600px) {
       header {
         padding: 50px 15px;
@@ -201,18 +235,13 @@
         font-size: 26px;
       }
 
-      .project-btn {
-        padding: 10px 16px;
-        margin: 8px 5px 0 0;
+      .project-card {
+        flex: 1 1 100%;
       }
 
       #theme-toggle {
         bottom: 20px;
         right: 20px;
-      }
-
-      .project-card {
-        flex: 1 1 100%;
       }
     }
   </style>
@@ -275,7 +304,6 @@
     // Mode sombre/clair
     const toggleButton = document.getElementById('theme-toggle');
     const currentTheme = localStorage.getItem('theme') || 'dark';
-
     document.documentElement.setAttribute('data-theme', currentTheme);
     toggleButton.textContent = currentTheme === 'dark' ? '🌙 Mode Sombre' : '☀️ Mode Clair';
 
@@ -292,7 +320,7 @@
       }
     });
 
-    // Récupérer les projets GitHub
+    // Affichage dynamique des projets GitHub
     const username = 'AngeliHerimpitia';
     const projectsContainer = document.getElementById('projects');
 
@@ -300,12 +328,17 @@
       .then(response => response.json())
       .then(repos => {
         repos.forEach(repo => {
+          // Choisir couleur selon langage
+          const lang = repo.language || 'Other';
+          const langClass = 'lang-' + lang.replace(/\+/g,'p').replace(/\s/g,'') || 'lang-Other';
+
           const card = document.createElement('div');
           card.className = 'project-card';
           card.innerHTML = `
-            <h3>${repo.name}</h3>
+            <h3><i class="fab fa-github"></i> ${repo.name}</h3>
             <p>${repo.description || 'Pas de description disponible.'}</p>
-            <a href="${repo.html_url}" target="_blank">Voir sur GitHub</a>
+            <span class="lang-badge ${langClass}">${lang}</span>
+            <a href="${repo.html_url}" target="_blank"><i class="fab fa-github"></i> Voir sur GitHub</a>
           `;
           projectsContainer.appendChild(card);
         });
