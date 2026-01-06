@@ -103,7 +103,6 @@
       padding: 6px 0;
     }
 
-    /* Boutons généraux */
     .project-btn {
       display: inline-block;
       padding: 12px 20px;
@@ -122,7 +121,6 @@
       box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     }
 
-    /* Projets GitHub cartes */
     .projects-container {
       display: flex;
       flex-wrap: wrap;
@@ -185,7 +183,6 @@
       background: var(--secondary-color);
     }
 
-    /* Langage tag */
     .lang-badge {
       display: inline-block;
       padding: 3px 8px;
@@ -196,10 +193,9 @@
       margin-top: 8px;
     }
 
-    /* Couleurs langage */
     .lang-JavaScript { background: #f7df1e; color: #111; }
     .lang-C { background: #00599C; }
-    .lang-Cp { background: #00599C; } /* C++ */
+    .lang-Cp { background: #00599C; }
     .lang-Python { background: #3572A5; }
     .lang-HTML { background: #e34c26; }
     .lang-CSS { background: #264de4; }
@@ -210,7 +206,6 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Mode toggle button */
     #theme-toggle {
       position: fixed;
       bottom: 30px;
@@ -232,22 +227,10 @@
     }
 
     @media (max-width: 600px) {
-      header {
-        padding: 50px 15px;
-      }
-
-      h1 {
-        font-size: 26px;
-      }
-
-      .project-card {
-        flex: 1 1 100%;
-      }
-
-      #theme-toggle {
-        bottom: 20px;
-        right: 20px;
-      }
+      header { padding: 50px 15px; }
+      h1 { font-size: 26px; }
+      .project-card { flex: 1 1 100%; }
+      #theme-toggle { bottom: 20px; right: 20px; }
     }
   </style>
 </head>
@@ -302,7 +285,6 @@
     </ul>
   </section>
 
-  <!-- Bouton Mode Sombre / Clair -->
   <button id="theme-toggle">🌙 Mode Sombre</button>
 
   <script>
@@ -344,7 +326,7 @@
             <span class="lang-badge ${langClass}">${lang}</span>
             <div class="buttons">
               <a href="${repo.html_url}" target="_blank"><i class="fab fa-github"></i> Code</a>
-              ${repo.homepage ? `<a href="${repo.homepage}" target="_blank">Voir</a>` : ''}
+              <a href="https://${username}.github.io/${repo.name}/" target="_blank">Voir</a>
             </div>
           `;
           projectsContainer.appendChild(card);
