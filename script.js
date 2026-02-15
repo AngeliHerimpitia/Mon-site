@@ -17,35 +17,108 @@ toggleButton.addEventListener('click', () => {
   }
 });
 
-// Affichage dynamique des projets GitHub
+// Affichage dynamique des projets GitHub avec recherche et pagination
 const username = 'AngeliHerimpitia';
 const projectsContainer = document.getElementById('projects');
+const searchInput = document.getElementById('search-projects');
+const loadMoreBtn = document.getElementById('load-more-btn');
+const loadMoreContainer = document.getElementById('load-more-container');
+
+let allProjects = []; // Stocker tous les projets
+let visibleCount = 4; // Nombre de projets visibles au départ
 
 fetch(`https://api.github.com/users/${username}/repos?sort=updated`)
   .then(response => response.json())
   .then(repos => {
-    repos.forEach(repo => {
-      const lang = repo.language || 'Other';
-      const langClass = 'lang-' + lang.replace(/\+/g,'p').replace(/\s/g,'') || 'lang-Other';
-
-      const card = document.createElement('div');
-      card.className = 'project-card';
-      card.innerHTML = `
-        <h3><i class="fab fa-github"></i> ${repo.name}</h3>
-        <p>${repo.description || 'Pas de description disponible.'}</p>
-        <span class="lang-badge ${langClass}">${lang}</span>
-        <div class="buttons">
-          <a href="${repo.html_url}" target="_blank"><i class="fab fa-github"></i> Code</a>
-          <a href="https://${username}.github.io/${repo.name}/" target="_blank">Voir</a>
-        </div>
-      `;
-      projectsContainer.appendChild(card);
-    });
+    allProjects = repos;
+    displayProjects(allProjects);
+    
+    // Afficher le bouton "Voir plus" si plus de 4 projets
+    if (allProjects.length > visibleCount) {
+      loadMoreContainer.style.display = 'block';
+    }
   })
   .catch(err => {
     projectsContainer.innerHTML = '<p>Impossible de charger les projets GitHub.</p>';
     console.error(err);
   });
+
+function displayProjects(projects, showAll = false) {
+  projectsContainer.innerHTML = '';
+  
+  const projectsToShow = showAll ? projects : projects.slice(0, visibleCount);
+  
+  projectsToShow.forEach(repo => {
+    const lang = repo.language || 'Other';
+    const langClass = 'lang-' + lang.replace(/\+/g,'p').replace(/\s/g,'') || 'lang-Other';
+
+    const card = document.createElement('div');
+    card.className = 'project-card';
+    card.setAttribute('data-name', repo.name.toLowerCase());
+    card.setAttribute('data-description', (repo.description || '').toLowerCase());
+    card.setAttribute('data-language', lang.toLowerCase());
+    
+    card.innerHTML = `
+      <h3><i class="fab fa-github"></i> ${repo.name}</h3>
+      <p>${repo.description || 'Pas de description disponible.'}</p>
+      <span class="lang-badge ${langClass}">${lang}</span>
+      <div class="buttons">
+        <a href="${repo.html_url}" target="_blank"><i class="fab fa-github"></i> Code</a>
+        <a href="https://${username}.github.io/${repo.name}/" target="_blank">Voir</a>
+      </div>
+    `;
+    projectsContainer.appendChild(card);
+  });
+  
+  // Mettre à jour le bouton "Voir plus"
+  if (showAll || projects.length <= visibleCount) {
+    loadMoreContainer.style.display = 'none';
+  } else {
+    loadMoreContainer.style.display = 'block';
+  }
+}
+
+// Bouton "Voir plus"
+loadMoreBtn.addEventListener('click', () => {
+  displayProjects(allProjects, true);
+  loadMoreBtn.textContent = 'Voir moins';
+  loadMoreBtn.onclick = () => {
+    displayProjects(allProjects, false);
+    loadMoreBtn.textContent = 'Voir plus de projets';
+    loadMoreBtn.onclick = null;
+    loadMoreBtn.addEventListener('click', arguments.callee);
+  };
+});
+
+// Fonction de recherche
+searchInput.addEventListener('input', (e) => {
+  const searchTerm = e.target.value.toLowerCase().trim();
+  
+  if (searchTerm === '') {
+    // Si la recherche est vide, afficher les projets normalement
+    displayProjects(allProjects, false);
+    return;
+  }
+  
+  // Filtrer les projets
+  const filteredProjects = allProjects.filter(repo => {
+    const name = repo.name.toLowerCase();
+    const description = (repo.description || '').toLowerCase();
+    const language = (repo.language || '').toLowerCase();
+    
+    return name.includes(searchTerm) || 
+           description.includes(searchTerm) || 
+           language.includes(searchTerm);
+  });
+  
+  // Afficher les résultats (tous les résultats si recherche active)
+  displayProjects(filteredProjects, true);
+  
+  // Afficher un message si aucun résultat
+  if (filteredProjects.length === 0) {
+    projectsContainer.innerHTML = '<p style="text-align: center; color: #888;">Aucun projet trouvé pour cette recherche.</p>';
+  }
+});
 
 // Système de notation par étoiles
 const stars = document.querySelectorAll('.stars i');
