@@ -3,17 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Portfolio Développeur Web | HTML CSS JavaScript – Angeli Herimpitia</title>
+  <title>Portfolio Développeur Web | HTML CSS JavaScript – Angeli Herimpitia</title>
 
-<meta name="description" content="Portfolio d’Angeli Herimpitia, développeur web passionné. Projets en HTML, CSS, JavaScript, jeux web et interfaces modernes responsive.">
+  <meta name="description" content="Portfolio d'Angeli Herimpitia, développeur web passionné. Projets en HTML, CSS, JavaScript, jeux web et interfaces modernes responsive.">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
-  <!-- Icône GitHub -->
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
   <link rel="stylesheet" href="style.css">
- 
 </head>
 
 <body>
@@ -58,11 +61,48 @@
   </section>
 
   <section>
+    <h2>Contact</h2>
+    <p>N'hésitez pas à me contacter pour discuter de projets, collaborations ou simplement échanger !</p>
+    <div class="contact-links">
+      <a href="https://github.com/AngeliHerimpitia" target="_blank">
+        <i class="fab fa-github"></i> GitHub
+      </a>
+      <a href="mailto:a43027485@gmail.com">
+        <i class="fas fa-envelope"></i> Email
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <h2>Laissez un avis</h2>
+    <p>Votre retour est important pour moi ! Partagez vos impressions sur mon portfolio de manière anonyme.</p>
+    
+    <div class="feedback-form">
+      <textarea id="feedback-message" placeholder="Votre message ou avis (anonyme)..." rows="4" maxlength="300"></textarea>
+      <div class="rating">
+        <span>Note :</span>
+        <div class="stars">
+          <i class="far fa-star" data-rating="1"></i>
+          <i class="far fa-star" data-rating="2"></i>
+          <i class="far fa-star" data-rating="3"></i>
+          <i class="far fa-star" data-rating="4"></i>
+          <i class="far fa-star" data-rating="5"></i>
+        </div>
+      </div>
+      <button id="submit-feedback">Envoyer</button>
+    </div>
+
+    <div class="feedbacks-container" id="feedbacks">
+      <!-- Les avis s'afficheront ici -->
+    </div>
+  </section>
+
+  <section>
     <h2>Langues</h2>
     <ul>
       <li>Malagasy : Langue maternelle</li>
       <li>Français : Moyen</li>
-      <li>Anglais : Basique</li>
+      <li>Anglais : Moyen</li>
     </ul>
   </section>
 
