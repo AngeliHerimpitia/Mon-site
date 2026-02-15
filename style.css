@@ -107,6 +107,33 @@ ul li {
   box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
+/* Barre de recherche */
+.search-container {
+  margin-bottom: 20px;
+}
+
+#search-projects {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid var(--primary-color);
+  border-radius: 10px;
+  background: var(--section-bg);
+  color: var(--text-color);
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.95rem;
+  transition: all 0.3s;
+}
+
+#search-projects:focus {
+  outline: none;
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 10px rgba(75, 115, 255, 0.3);
+}
+
+#search-projects::placeholder {
+  color: #888;
+}
+
 .projects-container {
   display: flex;
   flex-wrap: wrap;
@@ -123,6 +150,10 @@ ul li {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.project-card.hidden {
+  display: none;
 }
 
 .project-card:hover {
@@ -186,6 +217,30 @@ ul li {
 .lang-HTML { background: #e34c26; }
 .lang-CSS { background: #264de4; }
 .lang-Other { background: #6c757d; }
+
+/* Bouton Voir plus */
+.load-more-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#load-more-btn {
+  padding: 12px 30px;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+#load-more-btn:hover {
+  background: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
 
 /* Section Contact */
 .contact-links {
