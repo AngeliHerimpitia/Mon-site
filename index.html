@@ -21,13 +21,30 @@
 
 <body>
 
+  <!-- Navigation principale -->
+  <nav class="main-nav">
+    <div class="nav-container">
+      <a href="#" class="nav-logo">Angeli</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Ouvrir le menu">
+        <span class="hamburger"></span>
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#about">À propos</a></li>
+        <li><a href="#formation">Formation</a></li>
+        <li><a href="#skills">Compétences</a></li>
+        <li><a href="#projects-section">Projets</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
   <header>
     <img src="photo3.jpg" alt="Photo de profil d'Angeli Herimpitia">
     <h1>Angeli Herimpitia</h1>
     <p>Développeur Junior • Passionné d'informatique</p>
   </header>
 
-  <section>
+  <section id="about">
     <h2>À propos de moi</h2>
     <p>
       Je suis un jeune développeur en formation, passionné par la création d'applications,
@@ -36,7 +53,7 @@
     </p>
   </section>
 
-  <section>
+  <section id="formation">
     <h2>Formation</h2>
     <ul>
       <li>2023–2024 : Baccalauréat Série D</li>
@@ -45,18 +62,18 @@
     </ul>
   </section>
 
-  <section>
+  <section id="skills">
     <h2>Compétences</h2>
     <ul>
       <li><strong>Bureautique :</strong> Très bon niveau</li>
-      <li><strong>Langages :</strong> C, C++ , Php ,JavaScript </li>
+      <li><strong>Langages :</strong> C, C++, PHP, JavaScript</li>
       <li><strong>Web :</strong> HTML, CSS, JavaScript</li>
       <li><strong>Bases de données :</strong> Access, SQLite, MySQL</li>
       <li><strong>Systèmes :</strong> Windows, Linux</li>
     </ul>
   </section>
 
-  <section>
+  <section id="projects-section">
     <h2>Mes Projets GitHub</h2>
     
     <!-- Barre de recherche -->
@@ -121,5 +138,9 @@
   <button id="theme-toggle">🌙 Mode Sombre</button>
 
   <script src="script.js"></script>
+
+  <footer>
+    © 2024‑<span id="current-year"></span> Angeli Herimpitia
+  </footer>
 </body>
 </html>
