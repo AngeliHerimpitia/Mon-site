@@ -231,11 +231,33 @@ document.getElementById('submit-feedback').addEventListener('click', () => {
 // Charger les avis au démarrage
 loadFeedbacks();
 
-// Afficher l'année actuelle dans le pied de page
-const currentYearSpan = document.getElementById('current-year');
-if (currentYearSpan) {
-  currentYearSpan.textContent = new Date().getFullYear();
+// Afficher l'année actuelle dans le pied de page (robuste)
+function updateFooterYear() {
+  const currentYearSpan = document.getElementById('current-year');
+  if (!currentYearSpan) {
+    console.warn('Élément #current-year introuvable');
+    return;
+  }
+
+  const now = new Date();
+  let year;
+  try {
+    year = now.getFullYear();
+  } catch (e) {
+    console.error('Erreur lors du calcul de l’année', e);
+  }
+
+  if (typeof year !== 'number' || isNaN(year)) {
+    year = (new Date()).getFullYear() || '2026';
+  }
+
+  currentYearSpan.textContent = year;
+  console.log('Année du footer mise à jour :', year);
 }
+
+document.addEventListener('DOMContentLoaded', updateFooterYear);
+// Essayer immédiatement au cas où DOMContentLoaded aurait déjà eu lieu
+updateFooterYear();
 
 // Toggle responsive navigation
 const navToggle = document.getElementById('nav-toggle');
