@@ -1,563 +1,255 @@
-:root {
-  --primary-color: #4b73ff;
-  --secondary-color: #7b5bff;
-  --bg-color: #0f0f14;
-  --section-bg: #181820;
-  --text-color: #e9e9e9;
-  --border-radius: 14px;
-}
+// Mode sombre/clair
+const toggleButton = document.getElementById('theme-toggle');
+const currentTheme = localStorage.getItem('theme') || 'dark';
+document.documentElement.setAttribute('data-theme', currentTheme);
+toggleButton.textContent = currentTheme === 'dark' ? '🌙 Mode Sombre' : '☀️ Mode Clair';
 
-[data-theme="light"] {
-  --bg-color: #f5f5f5;
-  --section-bg: #ffffff;
-  --text-color: #111111;
-  --primary-color: #4b73ff;
-  --secondary-color: #7b5bff;
-}
-
-* {
-  box-sizing: border-box;
-  transition: background 0.3s, color 0.3s;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background: var(--bg-color);
-  color: var(--text-color);
-  line-height: 1.6;
-}
-
-/* Navigation principale */
-.main-nav {
-  position: sticky;
-  top: 0;
-  background: var(--section-bg);
-  z-index: 100;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-}
-
-.nav-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-}
-
-.nav-logo {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--primary-color);
-  text-decoration: none;
-}
-
-.nav-links {
-  margin: 0;
-  padding: 10px 0;
-  display: flex;
-  list-style: none;
-  gap: 25px;
-}
-
-.nav-links a {
-  text-decoration: none;
-  color: var(--text-color);
-  font-weight: 500;
-  transition: color 0.2s;
-}
-
-.nav-links a:hover {
-  color: var(--primary-color);
-}
-
-.nav-toggle {
-  display: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 10px;
-}
-
-.nav-toggle .hamburger {
-  display: block;
-  width: 25px;
-  height: 2px;
-  background: var(--text-color);
-  position: relative;
-  transition: background 0.3s;
-}
-
-.nav-toggle .hamburger::before,
-.nav-toggle .hamburger::after {
-  content: '';
-  position: absolute;
-  width: 25px;
-  height: 2px;
-  background: var(--text-color);
-  transition: transform 0.3s;
-}
-
-.nav-toggle .hamburger::before {
-  transform: translateY(-8px);
-}
-
-.nav-toggle .hamburger::after {
-  transform: translateY(8px);
-}
-
-/* responsive menu */
-@media (max-width: 768px) {
-  .nav-toggle {
-    display: block;
+toggleButton.addEventListener('click', () => {
+  let theme = document.documentElement.getAttribute('data-theme');
+  if (theme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'light');
+    toggleButton.textContent = '☀️ Mode Clair';
+    localStorage.setItem('theme', 'light');
+  } else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    toggleButton.textContent = '🌙 Mode Sombre';
+    localStorage.setItem('theme', 'dark');
   }
+});
 
-  .nav-links {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    flex-direction: column;
-    background: var(--section-bg);
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-  }
+// Affichage dynamique des projets GitHub avec recherche et pagination
+const username = 'AngeliHerimpitia';
+const projectsContainer = document.getElementById('projects');
+const searchInput = document.getElementById('search-projects');
+const loadMoreBtn = document.getElementById('load-more-btn');
+const loadMoreContainer = document.getElementById('load-more-container');
 
-  .nav-links.open {
-    max-height: 300px;
-  }
+let allProjects = []; // Stocker tous les projets
+let visibleCount = 4; // Nombre de projets visibles au départ
 
-  .nav-links li {
-    text-align: center;
-    padding: 10px 0;
+fetch(`https://api.github.com/users/${username}/repos?sort=updated`)
+  .then(response => response.json())
+  .then(repos => {
+    allProjects = repos;
+    displayProjects(allProjects);
+    
+    // Afficher le bouton "Voir plus" si plus de 4 projets
+    if (allProjects.length > visibleCount) {
+      loadMoreContainer.style.display = 'block';
+    }
+  })
+  .catch(err => {
+    projectsContainer.innerHTML = '<p>Impossible de charger les projets GitHub.</p>';
+    console.error(err);
+  });
+
+function displayProjects(projects, showAll = false) {
+  projectsContainer.innerHTML = '';
+  
+  const projectsToShow = showAll ? projects : projects.slice(0, visibleCount);
+  
+  projectsToShow.forEach(repo => {
+    const lang = repo.language || 'Other';
+    const langClass = 'lang-' + lang.replace(/\+/g,'p').replace(/\s/g,'') || 'lang-Other';
+
+    const card = document.createElement('div');
+    card.className = 'project-card';
+    card.setAttribute('data-name', repo.name.toLowerCase());
+    card.setAttribute('data-description', (repo.description || '').toLowerCase());
+    card.setAttribute('data-language', lang.toLowerCase());
+    
+    card.innerHTML = `
+      <h3><i class="fab fa-github"></i> ${repo.name}</h3>
+      <p>${repo.description || 'Pas de description disponible.'}</p>
+      <span class="lang-badge ${langClass}">${lang}</span>
+      <div class="buttons">
+        <a href="${repo.html_url}" target="_blank"><i class="fab fa-github"></i> Code</a>
+        <a href="https://${username}.github.io/${repo.name}/" target="_blank">Voir</a>
+      </div>
+    `;
+    projectsContainer.appendChild(card);
+  });
+  
+  // Mettre à jour le bouton "Voir plus"
+  if (showAll || projects.length <= visibleCount) {
+    loadMoreContainer.style.display = 'none';
+  } else {
+    loadMoreContainer.style.display = 'block';
   }
 }
 
-header {
-  text-align: center;
-  padding: 70px 20px;
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-  border-bottom-left-radius: 40px;
-  border-bottom-right-radius: 40px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.45);
+// Bouton "Voir plus"
+loadMoreBtn.addEventListener('click', () => {
+  displayProjects(allProjects, true);
+  loadMoreBtn.textContent = 'Voir moins';
+  loadMoreBtn.onclick = () => {
+    displayProjects(allProjects, false);
+    loadMoreBtn.textContent = 'Voir plus de projets';
+    loadMoreBtn.onclick = null;
+    loadMoreBtn.addEventListener('click', arguments.callee);
+  };
+});
+
+// Fonction de recherche
+searchInput.addEventListener('input', (e) => {
+  const searchTerm = e.target.value.toLowerCase().trim();
+  
+  if (searchTerm === '') {
+    // Si la recherche est vide, afficher les projets normalement
+    displayProjects(allProjects, false);
+    return;
+  }
+  
+  // Filtrer les projets
+  const filteredProjects = allProjects.filter(repo => {
+    const name = repo.name.toLowerCase();
+    const description = (repo.description || '').toLowerCase();
+    const language = (repo.language || '').toLowerCase();
+    
+    return name.includes(searchTerm) || 
+           description.includes(searchTerm) || 
+           language.includes(searchTerm);
+  });
+  
+  // Afficher les résultats (tous les résultats si recherche active)
+  displayProjects(filteredProjects, true);
+  
+  // Afficher un message si aucun résultat
+  if (filteredProjects.length === 0) {
+    projectsContainer.innerHTML = '<p style="text-align: center; color: #888;">Aucun projet trouvé pour cette recherche.</p>';
+  }
+});
+
+// Système de notation par étoiles
+const stars = document.querySelectorAll('.stars i');
+let selectedRating = 0;
+
+stars.forEach(star => {
+  star.addEventListener('click', () => {
+    selectedRating = parseInt(star.getAttribute('data-rating'));
+    updateStars();
+  });
+
+  star.addEventListener('mouseenter', () => {
+    const rating = parseInt(star.getAttribute('data-rating'));
+    highlightStars(rating);
+  });
+});
+
+document.querySelector('.stars').addEventListener('mouseleave', () => {
+  updateStars();
+});
+
+function highlightStars(rating) {
+  stars.forEach(star => {
+    const starRating = parseInt(star.getAttribute('data-rating'));
+    if (starRating <= rating) {
+      star.classList.remove('far');
+      star.classList.add('fas');
+    } else {
+      star.classList.remove('fas');
+      star.classList.add('far');
+    }
+  });
 }
 
-header img {
-  width: 130px;
-  height: 130px;
-  border-radius: 50%;
-  border: 4px solid #fff;
-  object-fit: cover;
-  transition: transform 0.3s;
+function updateStars() {
+  highlightStars(selectedRating);
 }
 
-header img:hover {
-  transform: scale(1.05);
+// Gestion des avis anonymes
+const feedbacksKey = 'portfolio-feedbacks';
+
+function loadFeedbacks() {
+  const feedbacks = JSON.parse(localStorage.getItem(feedbacksKey)) || [];
+  const container = document.getElementById('feedbacks');
+  
+  if (feedbacks.length === 0) {
+    container.innerHTML = '<p style="text-align: center; color: #888;">Aucun avis pour le moment. Soyez le premier !</p>';
+    return;
+  }
+
+  container.innerHTML = '';
+  feedbacks.reverse().forEach(feedback => {
+    const item = document.createElement('div');
+    item.className = 'feedback-item';
+    
+    const starsHTML = Array(5).fill(0).map((_, i) => 
+      `<i class="fa${i < feedback.rating ? 's' : 'r'} fa-star"></i>`
+    ).join('');
+
+    item.innerHTML = `
+      <div class="feedback-header">
+        <span class="feedback-anonymous">Anonyme</span>
+        <div class="feedback-rating">${starsHTML}</div>
+      </div>
+      <p class="feedback-message">${feedback.message}</p>
+      <div class="feedback-date">${feedback.date}</div>
+    `;
+    container.appendChild(item);
+  });
 }
 
-h1 {
-  margin-top: 15px;
-  font-size: 32px;
-  font-weight: 600;
+document.getElementById('submit-feedback').addEventListener('click', () => {
+  const message = document.getElementById('feedback-message').value.trim();
+
+  if (!message) {
+    alert('Veuillez écrire un message.');
+    return;
+  }
+
+  if (selectedRating === 0) {
+    alert('Veuillez sélectionner une note.');
+    return;
+  }
+
+  const feedbacks = JSON.parse(localStorage.getItem(feedbacksKey)) || [];
+  const newFeedback = {
+    message: message,
+    rating: selectedRating,
+    date: new Date().toLocaleDateString('fr-FR', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    })
+  };
+
+  feedbacks.push(newFeedback);
+  localStorage.setItem(feedbacksKey, JSON.stringify(feedbacks));
+
+  // Réinitialiser le formulaire
+  document.getElementById('feedback-message').value = '';
+  selectedRating = 0;
+  updateStars();
+
+  // Recharger les avis
+  loadFeedbacks();
+
+  alert('Merci pour votre avis ! 🎉');
+});
+
+// Charger les avis au démarrage
+loadFeedbacks();
+
+// Afficher l'année actuelle dans le pied de page
+const currentYearSpan = document.getElementById('current-year');
+if (currentYearSpan) {
+  currentYearSpan.textContent = new Date().getFullYear();
 }
 
-header p {
-  margin: 5px 0 0;
-  font-weight: 300;
-  color: var(--text-color);
+// Toggle responsive navigation
+const navToggle = document.getElementById('nav-toggle');
+const navLinks = document.getElementById('nav-links');
+if (navToggle && navLinks) {
+  navToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+
+  // fermer le menu quand on clique sur un lien (amélioration UX mobile)
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+    });
+  });
 }
 
-section {
-  width: 90%;
-  max-width: 1000px;
-  margin: 30px auto;
-  padding: 25px;
-  background: var(--section-bg);
-  border-radius: var(--border-radius);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.35);
-  animation: fadeIn 0.7s ease;
-  scroll-margin-top: 80px; /* évite que la section soit masquée par la nav */
-}
-
-h2 {
-  color: var(--secondary-color);
-  border-left: 4px solid var(--secondary-color);
-  padding-left: 10px;
-  margin-bottom: 15px;
-}
-
-ul {
-  list-style: none;
-  padding-left: 0;
-}
-
-ul li {
-  padding: 6px 0;
-}
-
-.project-btn {
-  display: inline-block;
-  padding: 12px 20px;
-  background: var(--primary-color);
-  color: white;
-  font-weight: 600;
-  border-radius: 8px;
-  text-decoration: none;
-  margin: 10px 10px 0 0;
-  transition: all 0.3s ease;
-}
-
-.project-btn:hover {
-  background: var(--secondary-color);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-}
-
-/* Barre de recherche */
-.search-container {
-  margin-bottom: 20px;
-}
-
-#search-projects {
-  width: 100%;
-  padding: 12px 15px;
-  border: 2px solid var(--primary-color);
-  border-radius: 10px;
-  background: var(--section-bg);
-  color: var(--text-color);
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.95rem;
-  transition: all 0.3s;
-}
-
-#search-projects:focus {
-  outline: none;
-  border-color: var(--secondary-color);
-  box-shadow: 0 0 10px rgba(75, 115, 255, 0.3);
-}
-
-#search-projects::placeholder {
-  color: #888;
-}
-
-.projects-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-}
-
-.project-card {
-  background: var(--section-bg);
-  border-radius: var(--border-radius);
-  padding: 20px;
-  flex: 1 1 calc(50% - 20px);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-  transition: transform 0.3s, box-shadow 0.3s;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.project-card.hidden {
-  display: none;
-}
-
-.project-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.45);
-}
-
-.project-card h3 {
-  margin-top: 0;
-  color: var(--primary-color);
-  font-size: 1.2rem;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.project-card p {
-  font-size: 0.9rem;
-  color: var(--text-color);
-  flex-grow: 1;
-  margin-top: 5px;
-}
-
-.project-card .buttons {
-  margin-top: 10px;
-  display: flex;
-  gap: 10px;
-}
-
-.project-card a {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  text-decoration: none;
-  color: white;
-  background: var(--primary-color);
-  padding: 8px 12px;
-  border-radius: 6px;
-  font-weight: 600;
-  transition: background 0.3s;
-}
-
-.project-card a:hover {
-  background: var(--secondary-color);
-}
-
-.lang-badge {
-  display: inline-block;
-  padding: 3px 8px;
-  border-radius: 12px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: white;
-  margin-top: 8px;
-}
-
-.lang-JavaScript { background: #f7df1e; color: #111; }
-.lang-C { background: #00599C; }
-.lang-Cp { background: #00599C; }
-.lang-Python { background: #3572A5; }
-.lang-HTML { background: #e34c26; }
-.lang-CSS { background: #264de4; }
-.lang-Other { background: #6c757d; }
-
-/* Bouton Voir plus */
-.load-more-container {
-  text-align: center;
-  margin-top: 20px;
-}
-
-#load-more-btn {
-  padding: 12px 30px;
-  background: var(--primary-color);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-#load-more-btn:hover {
-  background: var(--secondary-color);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-}
-
-/* Section Contact */
-.contact-links {
-  display: flex;
-  gap: 15px;
-  flex-wrap: wrap;
-  margin-top: 15px;
-}
-
-.contact-links a {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 20px;
-  background: var(--primary-color);
-  color: white;
-  text-decoration: none;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: all 0.3s;
-  font-size: 0.95rem;
-}
-
-.contact-links a:hover {
-  background: var(--secondary-color);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-}
-
-/* Section Feedback/Avis */
-.feedback-form {
-  background: rgba(75, 115, 255, 0.05);
-  padding: 20px;
-  border-radius: var(--border-radius);
-  margin-top: 15px;
-}
-
-.feedback-form textarea {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 12px;
-  border: 2px solid var(--primary-color);
-  border-radius: 8px;
-  background: var(--section-bg);
-  color: var(--text-color);
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.95rem;
-}
-
-.feedback-form textarea:focus {
-  outline: none;
-  border-color: var(--secondary-color);
-}
-
-.rating {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 15px;
-}
-
-.stars {
-  display: flex;
-  gap: 5px;
-}
-
-.stars i {
-  font-size: 1.5rem;
-  color: #ffd700;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.stars i:hover {
-  transform: scale(1.2);
-}
-
-.stars i.fas {
-  color: #ffd700;
-}
-
-.stars i.far {
-  color: #555;
-}
-
-[data-theme="light"] .stars i.far {
-  color: #ccc;
-}
-
-#submit-feedback {
-  padding: 12px 30px;
-  background: var(--primary-color);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-#submit-feedback:hover {
-  background: var(--secondary-color);
-  transform: translateY(-2px);
-}
-
-.feedbacks-container {
-  margin-top: 25px;
-}
-
-.feedback-item {
-  background: rgba(75, 115, 255, 0.08);
-  padding: 15px;
-  border-radius: 10px;
-  margin-bottom: 15px;
-  border-left: 3px solid var(--primary-color);
-}
-
-.feedback-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-}
-
-.feedback-anonymous {
-  font-weight: 600;
-  color: var(--primary-color);
-}
-
-.feedback-rating {
-  display: flex;
-  gap: 2px;
-}
-
-.feedback-rating i {
-  font-size: 0.9rem;
-  color: #ffd700;
-}
-
-.feedback-message {
-  color: var(--text-color);
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
-
-.feedback-date {
-  font-size: 0.75rem;
-  color: #888;
-  margin-top: 8px;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-#theme-toggle {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  padding: 12px 16px;
-  background: var(--primary-color);
-  color: white;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  font-weight: 600;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-  z-index: 1000;
-}
-
-#theme-toggle:hover {
-  background: var(--secondary-color);
-  transform: translateY(-2px);
-}
-
-@media (max-width: 600px) {
-  header { padding: 35px 15px; }
-  h1 { font-size: 26px; }
-  .project-card { width: 100%; }
-  .contact-links { flex-direction: column; }
-  .contact-links a { width: 100%; justify-content: center; }
-  .main-nav ul { flex-direction: column; }
-  .main-nav li { margin-bottom: 10px; }
-  #theme-toggle { bottom: 20px; right: 20px; }
-}
-
-/* Footer */
-footer {
-  text-align: center;
-  padding: 20px;
-  color: var(--text-color);
-  background: var(--section-bg);
-  border-top: 1px solid rgba(255,255,255,0.1);
-  margin-top: 30px;
-  font-size: 0.9rem;
-}
-
-/* Slight polish on sections */
-section {
-  transition: transform 0.3s;
-}
-
-/* Increase base font size for readability */
-body {
-  font-size: 16px;
-}
