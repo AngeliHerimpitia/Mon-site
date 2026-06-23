@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio Développeur Web | HTML CSS JavaScript – Angeli Herimpitia</title>
+<title>Portfolio Développeur fullstack Junior – Angeli Herimpitia</title>
 
-  <meta name="description" content="Portfolio d'Angeli Herimpitia, développeur web passionné. Projets en HTML, CSS, JavaScript, jeux web et interfaces modernes responsive.">
+  <meta name="description" content="Portfolio d'Angeli Herimpitia, étudiant L2 Génie Logiciel. Projets full-stack Vue.js 3, PHP REST API, MySQL, C#, C++. Développeur junior passionné.">
 
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -32,6 +32,7 @@
         <li><a href="#about">À propos</a></li>
         <li><a href="#formation">Formation</a></li>
         <li><a href="#skills">Compétences</a></li>
+        <li><a href="#featured-project">Projet phare</a></li>
         <li><a href="#projects-section">Projets</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -47,9 +48,10 @@
   <section id="about">
     <h2>À propos de moi</h2>
     <p>
-      Je suis un jeune développeur en formation, passionné par la création d'applications,
-      le développement web et la logique informatique.  
-      J'apprends chaque jour et j'aime travailler sur des projets réels pour progresser rapidement.
+      Je suis un étudiant en Licence 2 Génie Logiciel à l'ENI Fianarantsoa, passionné par la création
+      d'applications web full-stack, des solutions mobiles et Desktops et la logique informatique. Je travaille sur des projets réels allant de la modélisation
+      avec MERISE jusqu'au déploiement en ligne, en passant par le développement .
+      J'apprends chaque jour et j'aime progresser par la pratique.
     </p>
   </section>
 
@@ -57,20 +59,119 @@
     <h2>Formation</h2>
     <ul>
       <li>2023–2024 : Baccalauréat Série D</li>
-      <li>2024–2025 : Licence 1 en Informatique</li>
-      <li>2025–2026 : Licence 2 en Informatique</li>
+      <li>2024–2025 : Licence 1 Informatique — ENI Fianarantsoa</li>
+      <li>2025–2026 : Licence 2 Génie Logiciel — ENI Fianarantsoa</li>
     </ul>
   </section>
 
   <section id="skills">
     <h2>Compétences</h2>
-    <ul>
-      <li><strong>Bureautique :</strong> Très bon niveau</li>
-      <li><strong>Langages :</strong> C, C++, PHP, JavaScript</li>
-      <li><strong>Web :</strong> HTML, CSS, JavaScript</li>
-      <li><strong>Bases de données :</strong> Access, SQLite, MySQL</li>
-      <li><strong>Systèmes :</strong> Windows, Linux</li>
-    </ul>
+
+    <div class="skills-grid">
+
+      <div class="skill-category">
+        <h3><i class="fas fa-code"></i> Langages</h3>
+        <div class="skill-tags">
+          <span class="skill-tag tag-js">JavaScript</span>
+          <span class="skill-tag tag-php">PHP</span>
+          <span class="skill-tag tag-php">JAVA</span>
+          <span class="skill-tag tag-csharp">C#</span>
+          <span class="skill-tag tag-c">C / C++</span>
+          <span class="skill-tag tag-c">SQL</span>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <h3><i class="fas fa-laptop-code"></i> Frontend</h3>
+        <div class="skill-tags">
+          <span class="skill-tag tag-vue">Vue.js 3</span>
+          <span class="skill-tag tag-html">HTML5</span>
+          <span class="skill-tag tag-css">CSS3</span>
+          <span class="skill-tag tag-css">JS</span>
+          <span class="skill-tag tag-chartjs">Chart.js</span>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <h3><i class="fas fa-server"></i> Backend</h3>
+        <div class="skill-tags">
+          <span class="skill-tag tag-php">PHP REST API</span>
+          <span class="skill-tag tag-pdo">PDO / MySQL</span>
+          <span class="skill-tag tag-neutral">Pattern Singleton</span>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <h3><i class="fas fa-database"></i> Bases de données</h3>
+        <div class="skill-tags">
+          <span class="skill-tag tag-mysql">MySQL</span>
+          <span class="skill-tag tag-neutral">SQLite</span>
+          <span class="skill-tag tag-neutral">Access</span>
+          <span class="skill-tag tag-neutral">PostegresSql</span>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <h3><i class="fas fa-project-diagram"></i> Modélisation</h3>
+        <div class="skill-tags">
+          <span class="skill-tag tag-merise">MERISE (MCD, MLD)</span>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <h3><i class="fas fa-tools"></i> Outils</h3>
+        <div class="skill-tags">
+          <span class="skill-tag tag-neutral">Git / GitHub</span>
+          <span class="skill-tag tag-neutral">XAMPP</span>
+          <span class="skill-tag tag-neutral">Visual Studio Code / Visual Code </span>
+          <span class="skill-tag tag-neutral">Linux / Windows</span>
+          <span class="skill-tag tag-neutral">Bureautique</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Projet phare : GENS -->
+  <section id="featured-project">
+    <h2>🏆 Projet Phare</h2>
+    <div class="featured-card">
+      <div class="featured-header">
+        <div class="featured-title">
+          <i class="fas fa-chalkboard-teacher"></i>
+          <h3>GENS — Gestion des Enseignants</h3>
+        </div>
+        <span class="featured-badge">Full-Stack · Déployé en ligne</span>
+      </div>
+
+      <p class="featured-description">
+        Application web complète de gestion des enseignants développée en autonomie dans le cadre
+        universitaire. Inclut l'authentification, le CRUD complet, des statistiques avec graphiques
+        et une interface responsive desktop/mobile.
+      </p>
+
+      <div class="featured-tech">
+        <span class="skill-tag tag-vue">Vue.js 3</span>
+        <span class="skill-tag tag-php">PHP REST API</span>
+        <span class="skill-tag tag-mysql">MySQL</span>
+        <span class="skill-tag tag-chartjs">Chart.js</span>
+        <span class="skill-tag tag-pdo">PDO Singleton</span>
+      </div>
+
+      <ul class="featured-highlights">
+        <li><i class="fas fa-check-circle"></i> Architecture full-stack Vue.js 3 + PHP backend séparé</li>
+        <li><i class="fas fa-check-circle"></i> REST API avec gestion CORS, authentification par session</li>
+        <li><i class="fas fa-check-circle"></i> Déployé sur serveur distant (InfinityFree) — configuration base de données distante</li>
+        <li><i class="fas fa-check-circle"></i> Interface double vue : tableau desktop, cartes mobile</li>
+        <li><i class="fas fa-check-circle"></i> Statistiques dynamiques avec Chart.js (barres et camembert)</li>
+      </ul>
+
+      <div class="featured-links">
+        <a href="https://angeliherimpitia.lovestoblog.com/" target="_blank">
+          <i class="fas fa-globe"></i> Voir en ligne
+        </a>
+      </div>
+    </div>
   </section>
 
   <section id="projects-section">
@@ -121,16 +222,14 @@
       <button id="submit-feedback">Envoyer</button>
     </div>
 
-    <div class="feedbacks-container" id="feedbacks">
-      <!-- Les avis s'afficheront ici -->
-    </div>
+    <div class="feedbacks-container" id="feedbacks"></div>
   </section>
 
   <section>
     <h2>Langues</h2>
     <ul>
       <li>Malagasy : Langue maternelle</li>
-      <li>Français : Moyen</li>
+      <li>Français : Intermédiaire</li>
       <li>Anglais : Basique</li>
     </ul>
   </section>
@@ -140,7 +239,7 @@
   <script src="script.js"></script>
 
   <footer>
-    © 2024‑<span id="current-year">2026</span> Angeli Herimpitia <!-- valeur par défaut pour éviter vide -->
+    © 2024‑<span id="current-year">2026</span> Angeli Herimpitia
   </footer>
 </body>
 </html>
