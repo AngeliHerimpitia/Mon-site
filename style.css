@@ -1,660 +1,245 @@
-:root {
-  --primary-color: #4b73ff;
-  --secondary-color: #7b5bff;
-  --bg-color: #0f0f14;
-  --section-bg: #181820;
-  --text-color: #e9e9e9;
-  --border-radius: 14px;
-}
-
-[data-theme="light"] {
-  --bg-color: #f5f5f5;
-  --section-bg: #ffffff;
-  --text-color: #111111;
-  --primary-color: #4b73ff;
-  --secondary-color: #7b5bff;
-}
-
-* {
-  box-sizing: border-box;
-  transition: background 0.3s, color 0.3s;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background: var(--bg-color);
-  color: var(--text-color);
-  line-height: 1.6;
-  font-size: 16px;
-}
-
-/* ── Navigation ── */
-.main-nav {
-  position: sticky;
-  top: 0;
-  background: var(--section-bg);
-  z-index: 100;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-}
-
-.nav-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-}
-
-.nav-logo {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--primary-color);
-  text-decoration: none;
-}
-
-.nav-links {
-  margin: 0;
-  padding: 10px 0;
-  display: flex;
-  list-style: none;
-  gap: 25px;
-}
-
-.nav-links a {
-  text-decoration: none;
-  color: var(--text-color);
-  font-weight: 500;
-  transition: color 0.2s;
-}
-
-.nav-links a:hover {
-  color: var(--primary-color);
-}
-
-.nav-toggle {
-  display: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 10px;
-}
-
-.nav-toggle .hamburger {
-  display: block;
-  width: 25px;
-  height: 2px;
-  background: var(--text-color);
-  position: relative;
-}
-
-.nav-toggle .hamburger::before,
-.nav-toggle .hamburger::after {
-  content: '';
-  position: absolute;
-  width: 25px;
-  height: 2px;
-  background: var(--text-color);
-  transition: transform 0.3s;
-}
-
-.nav-toggle .hamburger::before { transform: translateY(-8px); }
-.nav-toggle .hamburger::after  { transform: translateY(8px); }
-
-@media (max-width: 768px) {
-  .nav-toggle { display: block; }
-
-  .nav-links {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    flex-direction: column;
-    background: var(--section-bg);
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-  }
-
-  .nav-links.open { max-height: 350px; }
-
-  .nav-links li {
-    text-align: center;
-    padding: 10px 0;
-  }
-}
-
-/* ── Header ── */
-header {
-  text-align: center;
-  padding: 70px 20px;
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-  border-bottom-left-radius: 40px;
-  border-bottom-right-radius: 40px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.45);
-}
-
-header img {
-  width: 130px;
-  height: 130px;
-  border-radius: 50%;
-  border: 4px solid #fff;
-  object-fit: cover;
-  transition: transform 0.3s;
-}
-
-header img:hover { transform: scale(1.05); }
-
-h1 {
-  margin-top: 15px;
-  font-size: 32px;
-  font-weight: 600;
-}
-
-header p {
-  margin: 5px 0 0;
-  font-weight: 300;
-  color: var(--text-color);
-}
-
-/* ── Sections ── */
-section {
-  width: 90%;
-  max-width: 1000px;
-  margin: 30px auto;
-  padding: 25px;
-  background: var(--section-bg);
-  border-radius: var(--border-radius);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.35);
-  animation: fadeIn 0.7s ease;
-  scroll-margin-top: 80px;
-}
-
-h2 {
-  color: var(--secondary-color);
-  border-left: 4px solid var(--secondary-color);
-  padding-left: 10px;
-  margin-bottom: 15px;
-}
-
-ul {
-  list-style: none;
-  padding-left: 0;
-}
-
-ul li { padding: 6px 0; }
-
-/* ── Skills Grid ── */
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 18px;
-  margin-top: 10px;
-}
-
-.skill-category {
-  background: rgba(75, 115, 255, 0.06);
-  border-radius: 10px;
-  padding: 16px;
-  border: 1px solid rgba(75, 115, 255, 0.15);
-}
-
-.skill-category h3 {
-  margin: 0 0 12px 0;
-  font-size: 0.95rem;
-  color: var(--primary-color);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.skill-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-/* ── Skill Tags ── */
-.skill-tag {
-  display: inline-block;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: white;
-}
-
-.tag-vue     { background: #42b883; }
-.tag-php     { background: #7b7fb5; }
-.tag-js      { background: #f7df1e; color: #111; }
-.tag-html    { background: #e34c26; }
-.tag-css     { background: #264de4; }
-.tag-mysql   { background: #00758f; }
-.tag-pdo     { background: #4479a1; }
-.tag-csharp  { background: #9b4f96; }
-.tag-c       { background: #00599c; }
-.tag-chartjs { background: #ff6384; }
-.tag-merise  { background: #e67e22; }
-.tag-neutral { background: #555; }
-
-[data-theme="light"] .tag-neutral { background: #888; }
-[data-theme="light"] .tag-js { color: #111; }
-
-/* ── Projet Phare ── */
-.featured-card {
-  background: linear-gradient(135deg, rgba(75,115,255,0.08), rgba(123,91,255,0.08));
-  border: 1px solid rgba(75,115,255,0.3);
-  border-radius: var(--border-radius);
-  padding: 24px;
-  margin-top: 10px;
-}
-
-.featured-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 14px;
-}
-
-.featured-title {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.featured-title i {
-  font-size: 1.4rem;
-  color: var(--primary-color);
-}
-
-.featured-title h3 {
-  margin: 0;
-  font-size: 1.15rem;
-  color: var(--primary-color);
-}
-
-.featured-badge {
-  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-  color: white;
-  font-size: 0.75rem;
-  font-weight: 600;
-  padding: 5px 12px;
-  border-radius: 20px;
-  white-space: nowrap;
-}
-
-.featured-description {
-  font-size: 0.95rem;
-  color: var(--text-color);
-  margin: 0 0 16px 0;
-  line-height: 1.6;
-}
-
-.featured-tech {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 18px;
-}
-
-.featured-highlights {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 20px 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.featured-highlights li {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  font-size: 0.9rem;
-  padding: 0;
-}
-
-.featured-highlights i {
-  color: #42b883;
-  margin-top: 3px;
-  flex-shrink: 0;
-}
-
-.featured-links {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.featured-links a {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  text-decoration: none;
-  color: white;
-  background: var(--primary-color);
-  transition: all 0.3s;
-}
-
-.featured-links a:hover {
-  background: var(--secondary-color);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-}
-
-/* ── Search ── */
-.search-container { margin-bottom: 20px; }
-
-#search-projects {
-  width: 100%;
-  padding: 12px 15px;
-  border: 2px solid var(--primary-color);
-  border-radius: 10px;
-  background: var(--section-bg);
-  color: var(--text-color);
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.95rem;
-  transition: all 0.3s;
-}
-
-#search-projects:focus {
-  outline: none;
-  border-color: var(--secondary-color);
-  box-shadow: 0 0 10px rgba(75,115,255,0.3);
-}
-
-#search-projects::placeholder { color: #888; }
-
-/* ── Projects Grid ── */
-.projects-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-}
-
-.project-card {
-  background: var(--section-bg);
-  border-radius: var(--border-radius);
-  padding: 20px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-  transition: transform 0.3s, box-shadow 0.3s;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.project-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.45);
-}
-
-.project-card h3 {
-  margin-top: 0;
-  color: var(--primary-color);
-  font-size: 1.2rem;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.project-card p {
-  font-size: 0.9rem;
-  color: var(--text-color);
-  flex-grow: 1;
-  margin-top: 5px;
-}
-
-.project-card .buttons {
-  margin-top: 10px;
-  display: flex;
-  gap: 10px;
-}
-
-.project-card a {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  text-decoration: none;
-  color: white;
-  background: var(--primary-color);
-  padding: 8px 12px;
-  border-radius: 6px;
-  font-weight: 600;
-  transition: background 0.3s;
-}
-
-.project-card a:hover { background: var(--secondary-color); }
-
-.lang-badge {
-  display: inline-block;
-  padding: 3px 8px;
-  border-radius: 12px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: white;
-  margin-top: 8px;
-}
-
-.lang-JavaScript { background: #f7df1e; color: #111; }
-.lang-C          { background: #00599C; }
-.lang-Cpp        { background: #00599C; }
-.lang-Python     { background: #3572A5; }
-.lang-HTML       { background: #e34c26; }
-.lang-CSS        { background: #264de4; }
-.lang-Other      { background: #6c757d; }
-
-/* ── Load More ── */
-.load-more-container {
-  text-align: center;
-  margin-top: 20px;
-}
-
-#load-more-btn {
-  padding: 12px 30px;
-  background: var(--primary-color);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-#load-more-btn:hover {
-  background: var(--secondary-color);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-}
-
-/* ── Contact ── */
-.contact-links {
-  display: flex;
-  gap: 15px;
-  flex-wrap: wrap;
-  margin-top: 15px;
-}
-
-.contact-links a {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 20px;
-  background: var(--primary-color);
-  color: white;
-  text-decoration: none;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: all 0.3s;
-  font-size: 0.95rem;
-}
-
-.contact-links a:hover {
-  background: var(--secondary-color);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-}
-
-/* ── Feedback ── */
-.feedback-form {
-  background: rgba(75, 115, 255, 0.05);
-  padding: 20px;
-  border-radius: var(--border-radius);
-  margin-top: 15px;
-}
-
-.feedback-form textarea {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 12px;
-  border: 2px solid var(--primary-color);
-  border-radius: 8px;
-  background: var(--section-bg);
-  color: var(--text-color);
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.95rem;
-}
-
-.feedback-form textarea:focus {
-  outline: none;
-  border-color: var(--secondary-color);
-}
-
-.rating {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 15px;
-}
-
-.stars { display: flex; gap: 5px; }
-
-.stars i {
-  font-size: 1.5rem;
-  color: #ffd700;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.stars i:hover  { transform: scale(1.2); }
-.stars i.fas    { color: #ffd700; }
-.stars i.far    { color: #555; }
-
-[data-theme="light"] .stars i.far { color: #ccc; }
-
-#submit-feedback {
-  padding: 12px 30px;
-  background: var(--primary-color);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-#submit-feedback:hover {
-  background: var(--secondary-color);
-  transform: translateY(-2px);
-}
-
-.feedbacks-container { margin-top: 25px; }
-
-.feedback-item {
-  background: rgba(75, 115, 255, 0.08);
-  padding: 15px;
-  border-radius: 10px;
-  margin-bottom: 15px;
-  border-left: 3px solid var(--primary-color);
-}
-
-.feedback-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-}
-
-.feedback-anonymous { font-weight: 600; color: var(--primary-color); }
-
-.feedback-rating { display: flex; gap: 2px; }
-
-.feedback-rating i { font-size: 0.9rem; color: #ffd700; }
-
-.feedback-message {
-  color: var(--text-color);
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
-
-.feedback-date {
-  font-size: 0.75rem;
-  color: #888;
-  margin-top: 8px;
-}
-
-/* ── Theme toggle ── */
-#theme-toggle {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  padding: 12px 16px;
-  background: var(--primary-color);
-  color: white;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  font-weight: 600;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-  z-index: 1000;
-}
-
-#theme-toggle:hover {
-  background: var(--secondary-color);
-  transform: translateY(-2px);
-}
-
-/* ── Footer ── */
-footer {
-  text-align: center;
-  padding: 20px;
-  color: var(--text-color);
-  background: var(--section-bg);
-  border-top: 1px solid rgba(255,255,255,0.1);
-  margin-top: 30px;
-  font-size: 0.9rem;
-}
-
-/* ── Animations ── */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-section { transition: transform 0.3s; }
-
-/* ── Responsive ── */
-@media (max-width: 600px) {
-  header { padding: 35px 15px; }
-  h1 { font-size: 26px; }
-  .project-card { width: 100%; }
-  .contact-links { flex-direction: column; }
-  .contact-links a { width: 100%; justify-content: center; }
-  .skills-grid { grid-template-columns: 1fr; }
-  .featured-header { flex-direction: column; }
-  .featured-links { flex-direction: column; }
-  .featured-links a { justify-content: center; }
-  #theme-toggle { bottom: 20px; right: 20px; }
-}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio Développeur fullstack Junior – Angeli Herimpitia</title>
+
+  <meta name="description" content="Portfolio d'Angeli Herimpitia, étudiant L2 Génie Logiciel. Projets full-stack Vue.js 3, PHP REST API, MySQL, C#, C++. Développeur junior passionné.">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Navigation principale -->
+  <nav class="main-nav">
+    <div class="nav-container">
+      <a href="#" class="nav-logo">Angeli</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Ouvrir le menu">
+        <span class="hamburger"></span>
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#about">À propos</a></li>
+        <li><a href="#formation">Formation</a></li>
+        <li><a href="#skills">Compétences</a></li>
+        <li><a href="#featured-project">Projet phare</a></li>
+        <li><a href="#projects-section">Projets</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header>
+    <img src="photo3.jpg" alt="Photo de profil d'Angeli Herimpitia">
+    <h1>Angeli Herimpitia</h1>
+    <p>Développeur Junior • Passionné d'informatique</p>
+  </header>
+
+  <section id="about">
+    <h2>À propos de moi</h2>
+    <p>
+      Je suis un étudiant en Licence 2 Génie Logiciel à l'ENI Fianarantsoa, passionné par la création
+      d'applications web full-stack, des solutions mobiles et Desktops et la logique informatique. Je travaille sur des projets réels allant de la modélisation
+      avec MERISE jusqu'au déploiement en ligne, en passant par le développement .
+      J'apprends chaque jour et j'aime progresser par la pratique.
+    </p>
+  </section>
+
+  <section id="formation">
+    <h2>Formation</h2>
+    <ul>
+      <li>2023–2024 : Baccalauréat Série D</li>
+      <li>2024–2025 : Licence 1 Informatique — ENI Fianarantsoa</li>
+      <li>2025–2026 : Licence 2 Génie Logiciel — ENI Fianarantsoa</li>
+    </ul>
+  </section>
+
+  <section id="skills">
+    <h2>Compétences</h2>
+
+    <div class="skills-grid">
+
+      <div class="skill-category">
+        <h3><i class="fas fa-code"></i> Langages</h3>
+        <div class="skill-tags">
+          <span class="skill-tag tag-js">JavaScript</span>
+          <span class="skill-tag tag-php">PHP</span>
+          <span class="skill-tag tag-php">JAVA</span>
+          <span class="skill-tag tag-csharp">C#</span>
+          <span class="skill-tag tag-c">C / C++</span>
+          <span class="skill-tag tag-c">SQL</span>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <h3><i class="fas fa-laptop-code"></i> Frontend</h3>
+        <div class="skill-tags">
+          <span class="skill-tag tag-vue">Vue.js 3</span>
+          <span class="skill-tag tag-html">HTML5</span>
+          <span class="skill-tag tag-css">CSS3</span>
+          <span class="skill-tag tag-css">JS</span>
+          <span class="skill-tag tag-chartjs">Chart.js</span>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <h3><i class="fas fa-server"></i> Backend</h3>
+        <div class="skill-tags">
+          <span class="skill-tag tag-php">PHP REST API</span>
+          <span class="skill-tag tag-pdo">PDO / MySQL</span>
+          <span class="skill-tag tag-neutral">Pattern Singleton</span>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <h3><i class="fas fa-database"></i> Bases de données</h3>
+        <div class="skill-tags">
+          <span class="skill-tag tag-mysql">MySQL</span>
+          <span class="skill-tag tag-neutral">SQLite</span>
+          <span class="skill-tag tag-neutral">Access</span>
+          <span class="skill-tag tag-neutral">PostegresSql</span>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <h3><i class="fas fa-project-diagram"></i> Modélisation</h3>
+        <div class="skill-tags">
+          <span class="skill-tag tag-merise">MERISE (MCD, MLD)</span>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <h3><i class="fas fa-tools"></i> Outils</h3>
+        <div class="skill-tags">
+          <span class="skill-tag tag-neutral">Git / GitHub</span>
+          <span class="skill-tag tag-neutral">XAMPP</span>
+          <span class="skill-tag tag-neutral">Visual Studio Code / Visual Code </span>
+          <span class="skill-tag tag-neutral">Linux / Windows</span>
+          <span class="skill-tag tag-neutral">Bureautique</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Projet phare : GENS -->
+  <section id="featured-project">
+    <h2>Projet Phare</h2>
+    <div class="featured-card">
+      <div class="featured-header">
+        <div class="featured-title">
+          <i class="fas fa-chalkboard-teacher"></i>
+          <h3>GENS — Gestion des Enseignants</h3>
+        </div>
+        <span class="featured-badge">Full-Stack · Déployé en ligne</span>
+      </div>
+
+      <p class="featured-description">
+        Application web complète de gestion des enseignants développée en autonomie dans le cadre
+        universitaire. Inclut l'authentification, le CRUD complet, des statistiques avec graphiques
+        et une interface responsive desktop/mobile.
+      </p>
+
+      <div class="featured-tech">
+        <span class="skill-tag tag-vue">Vue.js 3</span>
+        <span class="skill-tag tag-php">PHP REST API</span>
+        <span class="skill-tag tag-mysql">MySQL</span>
+        <span class="skill-tag tag-chartjs">Chart.js</span>
+        <span class="skill-tag tag-pdo">PDO Singleton</span>
+      </div>
+
+      <ul class="featured-highlights">
+        <li><i class="fas fa-check-circle"></i> Architecture full-stack Vue.js 3 + PHP backend séparé</li>
+        <li><i class="fas fa-check-circle"></i> REST API avec gestion CORS, authentification par session</li>
+        <li><i class="fas fa-check-circle"></i> Déployé sur serveur distant (InfinityFree) — configuration base de données distante</li>
+        <li><i class="fas fa-check-circle"></i> Interface double vue : tableau desktop, cartes mobile</li>
+        <li><i class="fas fa-check-circle"></i> Statistiques dynamiques avec Chart.js (barres et camembert)</li>
+      </ul>
+
+      <div class="featured-links">
+        <a href="https://angeliherimpitia.lovestoblog.com/" target="_blank">
+          <i class="fas fa-globe"></i> Voir en ligne
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects-section">
+    <h2>Mes Projets GitHub</h2>
+    
+    <!-- Barre de recherche -->
+    <div class="search-container">
+      <input type="text" id="search-projects" placeholder="🔍 Rechercher un projet...">
+    </div>
+
+    <div class="projects-container" id="projects"></div>
+    
+    <!-- Bouton Voir plus -->
+    <div class="load-more-container" id="load-more-container" style="display: none;">
+      <button id="load-more-btn">Voir plus de projets</button>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>N'hésitez pas à me contacter pour discuter de projets, collaborations ou simplement échanger !</p>
+    <div class="contact-links">
+      <a href="https://github.com/AngeliHerimpitia" target="_blank">
+        <i class="fab fa-github"></i> GitHub
+      </a>
+      <a href="mailto:a43027485@gmail.com">
+        <i class="fas fa-envelope"></i> Email
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <h2>Laissez un avis</h2>
+    <p>Votre retour est important pour moi ! Partagez vos impressions sur mon portfolio de manière anonyme.</p>
+    
+    <div class="feedback-form">
+      <textarea id="feedback-message" placeholder="Votre message ou avis (anonyme)..." rows="4" maxlength="300"></textarea>
+      <div class="rating">
+        <span>Note :</span>
+        <div class="stars">
+          <i class="far fa-star" data-rating="1"></i>
+          <i class="far fa-star" data-rating="2"></i>
+          <i class="far fa-star" data-rating="3"></i>
+          <i class="far fa-star" data-rating="4"></i>
+          <i class="far fa-star" data-rating="5"></i>
+        </div>
+      </div>
+      <button id="submit-feedback">Envoyer</button>
+    </div>
+
+    <div class="feedbacks-container" id="feedbacks"></div>
+  </section>
+
+  <section>
+    <h2>Langues</h2>
+    <ul>
+      <li>Malagasy : Langue maternelle</li>
+      <li>Français : Intermédiaire</li>
+      <li>Anglais : Basique</li>
+    </ul>
+  </section>
+
+  <button id="theme-toggle">🌙 Mode Sombre</button>
+
+  <script src="script.js"></script>
+
+  <footer>
+    © 2024‑<span id="current-year">2026</span> Angeli Herimpitia
+  </footer>
+</body>
+</html>
